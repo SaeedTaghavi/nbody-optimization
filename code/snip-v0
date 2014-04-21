@@ -1,0 +1,18 @@
+for (i=0; i<N; i++){
+    f[IDX(i,0)] = 0.0;
+    f[IDX(i,1)] = 0.0;
+
+    for (j=0; j<N; j++){
+        dist = 0.0;
+        dx = x[IDX(j,0)] - x[IDX(i,0)];
+        dy = x[IDX(j,1)] - x[IDX(i,1)];
+        dist = dx*dx + dy*dy;
+        l = sqrt(dist);
+            
+        f[IDX(i,0)] -= epsilon * pow(1-l/R, 3./2) * dx/l * (l<R);
+        f[IDX(i,1)] -= epsilon * pow(1-l/R, 3./2) * dy/l * (l<R);
+    } 
+
+    f[IDX(i,0)] -= v[IDX(i,0)];
+    f[IDX(i,1)] -= v[IDX(i,1)];
+}

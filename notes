@@ -1,0 +1,84 @@
+"Premature optimization is the root of all evil" - Knuth
+  * talk about the trade off of your time / computer time
+  * talk about when you should consider optimizing (larger system is needed, statistics are needed, etc)
+
+( this section is on the board)
+
+Most improvements will made in the algorithm
+   * introduce Big-O notation and explore the O() of several common algorithms
+   * Use math when applicable and numerically stable - Fibonacci the naive way, via the powers of golden ratio
+   * Think of tricks - memoizing the answers to the Fibonacci sequence
+   * Maybe talk about algebraic simplification here as well
+   * Run-time efficiency isn't the only thing.  Metropolis vs. Wolff algorithm for reaching equilibrium - only relevant for clock time, the number of flips/sec is roughly the same
+
+Set up the real world problem of simulating a large system of elastic discs to talk about algorithms
+   * sketch out the naive N^2 algorithm 
+   * calculate how many interactions we actually have to calculate
+   * come up with a better algorithm, cell neighbors - we need to find particles near us and that's it, work from there
+   * what if we were to have long range forces? - talk briefly about fast multipole methods which are N log N
+
+Knowing your CPU - what if you want to do better?
+   * (point out this is the tip of the iceberg as far as low-level optimization can go)
+   * Introduction to how memory is structured, accessed.  
+   * Talk about falling out of cache in terms of problem size
+   * Talk about not using the cache problems when retrieving from RAM (cache misses)
+   * (cache is an example of something you can easily address and is very accessible by the developer)
+
+   * Introduce the processing pipeline, how the computer decides which code to run
+   * Talk about branch prediction and mis-predictions
+   * (example of something that is not so straight forward to control and matters less)
+
+   * I wanted to mention again that floating point arithmetic is not
+associative and talk about the optimizations associated with that but it might
+not fight here
+
+Parallel code
+   * The other option is to throw more resources at the problem
+   * Brief description of OpenMP, MPI, CUDA
+
+( this section is on the screen )
+
+Looking at examples of these optimizations.  There are 9 examples that I have
+cooked up to show the various speed improvements.  First I will run through
+with gcc -O0.  Then after explaining everything, run through with gcc -Ofast to
+show that the small fixes that seemed to make things a lot better actually
+don't matter thanks to the compiler.  
+
+1. Naive implementation, no attempt to reuse variables
+2. Add some variable re-use and test cases
+3. Move to a half list N^2/2 operations
+4. Look at the cost of the pow function vs sqrt vs multiplication
+5. Move to cell based neighborlist
+6. Fix the cache misses by changing to row major
+7. Use naive OpenMP
+8. Use better OpenMP
+9. CUDA example (very little explanation here)
+
+We hit a factor of 10^4 faster than the first version, but 95% of that was
+based on algorithm and using better computational resources.
+
+
+
+========================================================
+premature optimization is the root of all evil
+
+algorithm improvements
+    - N^2 to N
+    - use math etc when possible and numerically stable fibonacci
+    - lazy evaluation / algebraic simplification
+    - memoizing
+    - quad tree multipole
+    - metropolis better at equilibrating
+
+knowing your cpu
+    - branch prediction / loop interchange / branching
+    - cache misses / memory locality / falling out of cache
+    - fast-math
+    - floating point is not associative
+
+valgrind / cachegrind --branch-sim=yes / perf stat
+
+gpus are not that much faster than cpus, we are just bad
+at using cpus and are forced to do well on gpus
+
+using built-in functions is much better (e.g. memset)
