@@ -120,7 +120,7 @@ int *plot_render_particles(float *x, float rad, long N, float L, float *shade){
         ca = 1.0;
 
         #ifdef POINTS
-        glPointSize(2*rad[i]/L * plot_sizex);
+        glPointSize(2*rad/L * plot_sizex);
         plot_set_draw_color(cr,cg,cb,ca);
         glVertex2f(tx, ty);
         #else

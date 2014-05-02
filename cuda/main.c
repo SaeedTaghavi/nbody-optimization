@@ -16,7 +16,7 @@
 
 void simulate(int s);
 
-#define NPOW        (10+6)
+#define NPOW        (10+8)
 #define TPOW        (6 + NPOW%2)
 #define N           (1 << NPOW)
 #define NTHREADS    (1 << TPOW)
@@ -242,7 +242,7 @@ void simulate(int seed){
 
     #ifdef PLOT
         int *key;
-        plot_init(800); // 2**18 - 450, 2**20 - 900, 2**21 - 1100
+        plot_init(1100); // 2**18 - 450, 2**20 - 900, 2**21 - 1100
         plot_clear_screen();
         key = plot_render_particles(x, radius, N, L,col);
     #endif
